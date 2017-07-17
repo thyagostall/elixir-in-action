@@ -10,7 +10,10 @@ defmodule TodoList do
     %TodoList{todo_list | entries: new_entries, auto_id: auto_id + 1}
   end
 
-  def entries() do
+  def entries(%TodoList{entries: entries}, {_, _, _} = date) do
+    entries
+    |> Enum.filter(fn {_, x} -> x.date == date end)
+    |> Enum.map(fn {_, x} -> x end)
   end
 
   def update_entry(%TodoList{} = todo_list, %{} = new_entry) do
